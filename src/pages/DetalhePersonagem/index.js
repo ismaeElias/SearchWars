@@ -1,7 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { View, Text } from "react-native";
 import axios from "axios";
 
+import { View, Text } from "react-native";
+import {
+  Container,
+  Title,
+  TextInfo,
+  SubTitle,
+  BoxInfo,
+  ItemFilmes,
+  TextFilmes
+} from "./styles";
+
+
+import Icon from "react-native-vector-icons/FontAwesome";
 import Loading from "../../components/Loading";
 
 export default function DetalhePersonagem(props) {
@@ -37,19 +49,34 @@ export default function DetalhePersonagem(props) {
   }, []);
 
   return (
-    <View>
+    <Container>
       {isLoading ? (
         <Loading />
       ) : (
         <>
-          <Text>{personagem.nome}</Text>
-          <Text>{personagem.aniversario}</Text>
-          <Text>{personagem.genero}</Text>
+          <Title>{personagem.nome}</Title>
+          <SubTitle>Informações:</SubTitle>
+          <BoxInfo>
+            <TextInfo>
+              <Text style={{ color: "#121212" }}>Aniversario: </Text>
+              {personagem.aniversario}
+            </TextInfo>
+            <TextInfo>
+              <Text style={{ color: "#121212" }}>Genero: </Text>{" "}
+              {personagem.genero}
+            </TextInfo>
+          </BoxInfo>
+          <SubTitle>Filmes:</SubTitle>
           {personagem.filmes.map((filmes, index) => {
-            return <Text key={index}> {filmes.title}</Text>;
+            return (
+              <ItemFilmes key={index}>
+                <TextFilmes>{filmes.title}</TextFilmes>
+                <Icon name="caret-right" size={30} color="#A5A5A5" />
+              </ItemFilmes>
+            );
           })}
         </>
       )}
-    </View>
+    </Container>
   );
 }
