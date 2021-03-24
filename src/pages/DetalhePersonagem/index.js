@@ -26,9 +26,10 @@ export default function DetalhePersonagem(props) {
   const [isLoading, setIsLoading] = useState(false);
 
   async function getPersonagem(url) {
-    setIsLoading(true);
     const { data } = await axios.get(url);
     const filmes = [];
+
+    setIsLoading(true);
 
     for (const film of data.films) {
       const filmesPersonagem = await axios.get(film);
@@ -41,8 +42,10 @@ export default function DetalhePersonagem(props) {
       genero: data.gender,
       filmes: filmes,
     });
+    
     setIsLoading(false);
   }
+
   useEffect(() => {
     const url = props.route.params.url;
     getPersonagem(url);
