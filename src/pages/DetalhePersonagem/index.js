@@ -69,7 +69,11 @@ export default function DetalhePersonagem(props) {
           <SubTitle>Filmes:</SubTitle>
           {personagem.filmes.map((filmes, index) => {
             return (
-              <ItemFilmes key={index}>
+              <ItemFilmes key={index} onPress={()=> {
+                props.navigation.navigate('detalhe-filme', {
+                  url : filmes.url
+                });
+              }}>
                 <TextFilmes>{filmes.title}</TextFilmes>
                 <Icon name="caret-right" size={30} color="#A5A5A5" />
               </ItemFilmes>
