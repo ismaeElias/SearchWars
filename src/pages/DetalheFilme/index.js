@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { View, Text } from "react-native";
+import { ScrollView} from "react-native";
 import axios from "axios";
 
-import Loading from '../../components/Loading';
+import Loading from "../../components/Loading";
+import { Container, Title, TextoAbertura, BoxInfo, TextInfo } from "./styles";
 
 export default function DetalheFilme(props) {
   const [isLoading, setIsLoading] = useState(false);
@@ -40,7 +41,7 @@ export default function DetalheFilme(props) {
       personagens: personagens,
       planetas: planetas,
     });
-    
+
     setIsLoading(false);
   }
 
@@ -50,8 +51,21 @@ export default function DetalheFilme(props) {
   }, []);
 
   return (
-    <View>
-      {isLoading ? <Loading /> : (<Text>{filme.titulo}</Text>)}
-    </View>
+    <Container>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        filme.titulo !== "" && (
+          <ScrollView>
+            <Title>{filme.titulo}</Title>
+            <TextoAbertura>{filme.texto_abertura}</TextoAbertura>
+            <BoxInfo>
+              <TextInfo>Episodio: {filme.episodio}</TextInfo>
+              <TextInfo>Data: {filme.lancamento}</TextInfo>
+            </BoxInfo>
+          </ScrollView>
+        )
+      )}
+    </Container>
   );
 }

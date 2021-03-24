@@ -9,9 +9,8 @@ import {
   SubTitle,
   BoxInfo,
   ItemFilmes,
-  TextFilmes
+  TextFilmes,
 } from "./styles";
-
 
 import Icon from "react-native-vector-icons/FontAwesome";
 import Loading from "../../components/Loading";
@@ -42,7 +41,7 @@ export default function DetalhePersonagem(props) {
       genero: data.gender,
       filmes: filmes,
     });
-    
+
     setIsLoading(false);
   }
 
@@ -56,33 +55,38 @@ export default function DetalhePersonagem(props) {
       {isLoading ? (
         <Loading />
       ) : (
-        <>
-          <Title>{personagem.nome}</Title>
-          <SubTitle>Informações:</SubTitle>
-          <BoxInfo>
-            <TextInfo>
-              <Text style={{ color: "#121212" }}>Aniversario: </Text>
-              {personagem.aniversario}
-            </TextInfo>
-            <TextInfo>
-              <Text style={{ color: "#121212" }}>Genero: </Text>{" "}
-              {personagem.genero}
-            </TextInfo>
-          </BoxInfo>
-          <SubTitle>Filmes:</SubTitle>
-          {personagem.filmes.map((filmes, index) => {
-            return (
-              <ItemFilmes key={index} onPress={()=> {
-                props.navigation.navigate('detalhe-filme', {
-                  url : filmes.url
-                });
-              }}>
-                <TextFilmes>{filmes.title}</TextFilmes>
-                <Icon name="caret-right" size={30} color="#A5A5A5" />
-              </ItemFilmes>
-            );
-          })}
-        </>
+        personagem.nome !== '' && (
+          <>
+            <Title>{personagem.nome}</Title>
+            <SubTitle>Informações:</SubTitle>
+            <BoxInfo>
+              <TextInfo>
+                <Text style={{ color: "#121212" }}>Aniversario: </Text>
+                {personagem.aniversario}
+              </TextInfo>
+              <TextInfo>
+                <Text style={{ color: "#121212" }}>Genero: </Text>{" "}
+                {personagem.genero}
+              </TextInfo>
+            </BoxInfo>
+            <SubTitle>Filmes:</SubTitle>
+            {personagem.filmes.map((filmes, index) => {
+              return (
+                <ItemFilmes
+                  key={index}
+                  onPress={() => {
+                    props.navigation.navigate("detalhe-filme", {
+                      url: filmes.url,
+                    });
+                  }}
+                >
+                  <TextFilmes>{filmes.title}</TextFilmes>
+                  <Icon name="caret-right" size={30} color="#A5A5A5" />
+                </ItemFilmes>
+              );
+            })}
+          </>
+        )
       )}
     </Container>
   );
