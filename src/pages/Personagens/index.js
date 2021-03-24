@@ -5,7 +5,7 @@ import { Picker } from "@react-native-picker/picker";
 import { Container, ContainerCard } from "./styles";
 
 import Input from "../../components/Input";
-import Card from "../../components/Card";
+import ListItem from "../../components/ListItem";
 import Loading from "../../components/Loading";
 
 import api from "../../services/api";
@@ -67,7 +67,7 @@ export default function Personagens({navigation}) {
         selectedValue={selectedLanguage}
         onValueChange={(itemValue, itemIndex) => {
           setSelectedLanguage(itemValue);
-          if(itemValue != 'All'){
+          if(itemValue !== 'All'){
             let personFiltered = personagem.filter( filter => {
               return filter.gender === itemValue;
             })
@@ -82,6 +82,7 @@ export default function Personagens({navigation}) {
           return <Picker.Item key={index} label={genero} value={genero} />;
         })}
       </Picker>
+
       <ContainerCard>
         {isLoading ? (
           <Loading />
@@ -91,12 +92,12 @@ export default function Personagens({navigation}) {
               style={{width: '100%'}}
               data={personFiltered}
               renderItem={({ item, index }) => (
-                <Card
+                <ListItem
                   nome={item.name}
-                  aniversario={item.birth_year}
                   genero={item.gender}
-                  filmes={item.films}
-                  navigation={navigation}
+                  onPress={()=>{
+                    Alert.alert('clicou')
+                  }}
                 />
               )}
               keyExtractor={(item, index) => String(index)}
