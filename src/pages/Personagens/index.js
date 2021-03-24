@@ -10,8 +10,7 @@ import Loading from "../../components/Loading";
 
 import api from "../../services/api";
 
-export default function Personagens({navigation}) {
-
+export default function Personagens({ navigation }) {
   const [selectedLanguage, setSelectedLanguage] = useState();
   const [textInput, setTextInput] = useState();
   const [personagem, setPersonagem] = useState([]);
@@ -30,7 +29,7 @@ export default function Personagens({navigation}) {
       return;
     }
 
-    await api.get(`people?search=${personagem}`).then((res) => {
+    await api.get(`people?search=${textInput}`).then((res) => {
       const { results } = res.data;
       let SetGender = [];
 
@@ -67,10 +66,10 @@ export default function Personagens({navigation}) {
         selectedValue={selectedLanguage}
         onValueChange={(itemValue, itemIndex) => {
           setSelectedLanguage(itemValue);
-          if(itemValue !== 'All'){
-            let personFiltered = personagem.filter( filter => {
+          if (itemValue !== "All") {
+            let personFiltered = personagem.filter((filter) => {
               return filter.gender === itemValue;
-            })
+            });
             setPersonFiltered(personFiltered);
           } else {
             setPersonFiltered(personagem);
@@ -89,14 +88,16 @@ export default function Personagens({navigation}) {
         ) : (
           personagem && (
             <FlatList
-              style={{width: '100%'}}
+              style={{ width: "100%" }}
               data={personFiltered}
               renderItem={({ item, index }) => (
                 <ListItem
                   nome={item.name}
                   genero={item.gender}
-                  onPress={()=>{
-                    Alert.alert('clicou')
+                  onPress={() => {
+                    navigation.navigate("detalhe-personagem", {
+                      url : item.url
+                    });
                   }}
                 />
               )}

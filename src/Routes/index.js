@@ -5,6 +5,7 @@ import Home from "../pages/Home";
 import Personagens from "../pages/Personagens";
 import Filmes from "../pages/Filmes";
 import Planetas from "../pages/Planetas";
+import DetalhePersonagem from '../pages/DetalhePersonagem';
 
 const Stack = createStackNavigator();
 
@@ -53,6 +54,21 @@ function Routes() {
         key={4}
         options={{
           title: "Planetas",
+          headerStyle: {
+            backgroundColor: "#121212",
+          },
+          headerTintColor: "#C4C4C4",
+          headerTitleStyle: {
+            fontWeight: "bold",
+          },
+        }}
+      />
+       <Stack.Screen
+        name="detalhe-personagem"
+        component={DetalhePersonagem}
+        key={5}
+        options={{
+          title: "Detalhes",
           headerStyle: {
             backgroundColor: "#121212",
           },
