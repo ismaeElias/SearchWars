@@ -98,7 +98,7 @@ function Routes() {
       <Stack.Screen
         name="detalhe-planeta"
         component={DetalhePlanetas}
-        key={6}
+        key={7}
         options={{
           title: "Detalhe do Planeta",
           headerStyle: {
