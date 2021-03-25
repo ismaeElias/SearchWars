@@ -22,12 +22,12 @@ export default function DetalhePersonagem(props) {
     genero: "",
     filmes: [],
   });
+
   const [isLoading, setIsLoading] = useState(false);
 
   async function getPersonagem(url) {
     const { data } = await axios.get(url);
     const filmes = [];
-
     setIsLoading(true);
 
     for (const film of data.films) {
@@ -46,16 +46,20 @@ export default function DetalhePersonagem(props) {
   }
 
   useEffect(() => {
-    const url = props.route.params.url;
-    getPersonagem(url);
-  }, []);
+    const unsubscribe = props.navigation.addListener("focus", () => {
+      const url = props.route.params.url;
+      getPersonagem(url);
+    });
+
+    return unsubscribe
+  }, [props.navigation]);
 
   return (
     <Container>
       {isLoading ? (
         <Loading />
       ) : (
-        personagem.nome !== '' && (
+        personagem.nome !== "" && (
           <>
             <Title>{personagem.nome}</Title>
             <SubTitle>Informações:</SubTitle>
@@ -75,8 +79,14 @@ export default function DetalhePersonagem(props) {
                 <ItemFilmes
                   key={index}
                   onPress={() => {
-                    props.navigation.navigate("detalhe-filme", {
+                    props.navigation.push("detalhe-filme", {
                       url: filmes.url,
+                    });
+                    setPersonagem({
+                      nome: "",
+                      aniversario: "",
+                      genero: "",
+                      filmes: [],
                     });
                   }}
                 >

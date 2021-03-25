@@ -37,3 +37,52 @@ export const BoxInfo = styled.View`
   border-bottom-color: #e5c535;
   border-radius: 5px;
 `;
+
+export const BoxPersonagem = styled.View`
+  background-color: #c4c4c4;
+  border-radius: 5px;
+  margin: 5px;
+  padding: 5px;
+`;
+
+export const TitlePersonagem = styled.Text`
+  color: #121212;
+  font-weight: bold;
+  font-size: 16px;
+`;
+
+export const ItemPersonagem = styled.TouchableOpacity`
+  border-bottom-width: 2px;
+  border-bottom-color: #e5c535;
+  padding: 5px;
+  font-weight: bold;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+
+export const BoxPlanetas= styled.View`
+  background-color: #c4c4c4;
+  border-radius: 5px;
+  margin: 5px;
+  padding: 5px;
+`;
+
+export const TitlePlanetas= styled.Text`
+  color: #121212;
+  font-weight: bold;
+  font-size: 16px;
+`;
+
+export const ItemPlanetas = styled.TouchableOpacity`
+  border-bottom-width: 2px;
+  border-bottom-color: #e5c535;
+  padding: 5px;
+  font-weight: bold;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
