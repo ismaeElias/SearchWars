@@ -4,13 +4,13 @@ import api from "../../services/api";
 
 import { Picker } from "@react-native-picker/picker";
 
-import { Container,ContainerCard } from "./styles";
+import { Container, ContainerCard } from "./styles";
 
 import Input from "../../components/Input";
 import Loading from "../../components/Loading";
-import ListItem from '../../components/ListItem';
+import ListItem from "../../components/ListItem";
 
-export default function Filmes() {
+export default function Filmes({navigation}) {
   const [TextInput, setTextInput] = useState("");
   const [selectedLanguage, setSelectedLanguage] = useState();
   const [filme, setFilme] = useState([]);
@@ -20,11 +20,11 @@ export default function Filmes() {
   const [isLoading, setIsLoading] = useState(false);
 
   async function handlerGetFIlme() {
+    setIsLoading(true);
     let dataLancamento = [];
     let SetDataLancamento = [];
 
     await api.get(`/films?search=${TextInput}`).then((res) => {
-      
       setFilme(res.data.results);
       setFilmeFiltered(res.data.results);
 
@@ -39,6 +39,7 @@ export default function Filmes() {
         setDataLancamento(dataLancamento);
       }
     });
+    setIsLoading(false);
   }
 
   return (
@@ -88,7 +89,7 @@ export default function Filmes() {
                   genero={item.release_date}
                   onPress={() => {
                     navigation.navigate("detalhe-filme", {
-                      url : item.url
+                      url: item.url,
                     });
                   }}
                 />
