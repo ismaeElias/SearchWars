@@ -107,7 +107,7 @@ export default function DetalheFilme(props) {
                         })
                       }}
                     >
-                      <Text>{personagem.nome}</Text>
+                      <Text key={index}>{personagem.nome}</Text>
                       <Icon name="caret-right" size={30} color="#A5A5A5" />
                     </ItemPersonagem>
                   </View>
@@ -141,7 +141,7 @@ export default function DetalheFilme(props) {
                         })
                       }}
                     >
-                      <Text>{planetas.nome}</Text>
+                      <Text key={index}>{planetas.nome}</Text>
                       <Icon name="caret-right" size={30} color="#A5A5A5" />
                     </ItemPlanetas>
                   </View>

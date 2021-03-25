@@ -65,7 +65,6 @@ export default function DetalhePlanetas(props) {
   useEffect(() => {
     const unsubscribe = props.navigation.addListener("focus", () => {
       const url = props.route.params.url;
-      console.log(url);
       getPlaneta(url);
     });
 
@@ -76,7 +75,7 @@ export default function DetalhePlanetas(props) {
     <Container>
       {isLoading ? (
         <Loading />
-      ) : (
+      ) : planeta.nome !== '' && (
         <ScrollView>
           <Title>{planeta.nome}</Title>
           <BoxInfo>
@@ -129,7 +128,7 @@ export default function DetalhePlanetas(props) {
                         })
                       }}
                     >
-                      <Text>{residente.nome}</Text>
+                      <Text key={index}>{residente.nome}</Text>
                       <Icon name="caret-right" size={30} color="#A5A5A5" />
                     </ItemResidentes>
                   </View>
@@ -141,6 +140,7 @@ export default function DetalhePlanetas(props) {
               {planeta.filmes.map((filme, index) => {
                 return (
                   <View
+                    key={index}
                     style={{
                       flexDirection: "row",
                       justifyContent: "space-between",
@@ -165,7 +165,7 @@ export default function DetalhePlanetas(props) {
                         })
                       }}
                     >
-                      <Text>{filme.nome}</Text>
+                      <Text key={index}>{filme.nome}</Text>
                       <Icon name="caret-right" size={30} color="#A5A5A5" />
                     </ItemFilmes>
                   </View>
