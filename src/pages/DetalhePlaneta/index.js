@@ -167,8 +167,8 @@ export default function DetalhePlanetas(props) {
                         })
                       }}
                     >
-                      <Text key={index}>{filme.nome}</Text>
-                      <Icon name="caret-right" size={30} color="#A5A5A5" />
+                      <TextDark key={index}>{filme.nome}</TextDark>
+                      <Icon name="caret-right" size={30} color="#373737" />
                     </ItemFilmes>
                   </View>
                 );
