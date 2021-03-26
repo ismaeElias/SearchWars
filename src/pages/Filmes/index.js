@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {  FlatList } from "react-native";
+import { FlatList } from "react-native";
 import api from "../../services/api";
 
 import { Picker } from "@react-native-picker/picker";
@@ -9,8 +9,10 @@ import { Container, ContainerCard } from "./styles";
 import Input from "../../components/Input";
 import Loading from "../../components/Loading";
 import ListItem from "../../components/ListItem";
+import BoxFilter from "../../components/BoxFilter";
+import Title from "../../components/Title";
 
-export default function Filmes({navigation}) {
+export default function Filmes({ navigation }) {
   const [TextInput, setTextInput] = useState("");
   const [selectedLanguage, setSelectedLanguage] = useState();
   const [filme, setFilme] = useState([]);
@@ -53,28 +55,29 @@ export default function Filmes({navigation}) {
           setTextInput(text);
         }}
       />
-
-      <Picker
-        enabled={isActivePicker}
-        selectedValue={selectedLanguage}
-        onValueChange={(itemValue, itemIndex) => {
-          setSelectedLanguage(itemValue);
-          if (itemValue !== "All") {
-            let filmeFiltered = filme.filter((filter) => {
-              return filter.release_date === itemValue;
-            });
-            setFilmeFiltered(filmeFiltered);
-          } else {
-            setFilmeFiltered(filme);
-          }
-        }}
-      >
-        <Picker.Item label="All" value="All" />
-        {dataLancamento.map((data, index) => {
-          return <Picker.Item key={index} label={data} value={data} />;
-        })}
-      </Picker>
-
+      <BoxFilter>
+        <Title>Data lançamento:</Title>
+        <Picker
+          enabled={isActivePicker}
+          selectedValue={selectedLanguage}
+          onValueChange={(itemValue, itemIndex) => {
+            setSelectedLanguage(itemValue);
+            if (itemValue !== "All") {
+              let filmeFiltered = filme.filter((filter) => {
+                return filter.release_date === itemValue;
+              });
+              setFilmeFiltered(filmeFiltered);
+            } else {
+              setFilmeFiltered(filme);
+            }
+          }}
+        >
+          <Picker.Item label="All" value="All" />
+          {dataLancamento.map((data, index) => {
+            return <Picker.Item key={index} label={data} value={data} />;
+          })}
+        </Picker>
+      </BoxFilter>
       <ContainerCard>
         {isLoading ? (
           <Loading />

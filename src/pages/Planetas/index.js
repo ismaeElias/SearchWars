@@ -1,18 +1,21 @@
 import React, { useState } from "react";
-import { View, Text,FlatList } from "react-native";
+import { View, Text, FlatList } from "react-native";
 import api from "../../services/api";
 import { Picker } from "@react-native-picker/picker";
 
 import { ArrayFilter } from "../../utils/index";
 
-import { Container, ContainerCard } from "./styles";
+import { Container, ContainerCard  } from "./styles";
+
 import Input from "../../components/Input";
 import Loading from "../../components/Loading";
-import ListItem from "../../components/ListItem";
+import ListItemPlanet from "../../components/ListItemPlanet";
+import BoxFilter from '../../components/BoxFilter';
+import Title from '../../components/Title';
 
 export default function Planetas({ navigation }) {
-  const [populacaoSelecionada, setPopulacaoSelecionada] = useState('All');
-  const [climaSelecionado, setClimaSelecionado] = useState('All');
+  const [populacaoSelecionada, setPopulacaoSelecionada] = useState("All");
+  const [climaSelecionado, setClimaSelecionado] = useState("All");
   const [isActivePicker, setIsActivePicker] = useState(false);
   const [TextInput, setTextInput] = useState("");
   const [planetas, setPlanetas] = useState([]);
@@ -104,34 +107,36 @@ export default function Planetas({ navigation }) {
           setTextInput(text);
         }}
       />
-      <Text>População: </Text>
-      <Picker
-        enabled={isActivePicker}
-        selectedValue={populacaoSelecionada}
-        onValueChange={(itemValue, itemIndex) => {
-          FiltroPopulacao(itemValue);
-        }}
-      >
-        <Picker.Item label="All" value="All" />
-        {filtroPopulacao.map((data, index) => {
-          return <Picker.Item key={index} label={data} value={data} />;
-        })}
-      </Picker>
-      <Text>Clima: </Text>
-      <Picker
-        enabled={isActivePicker}
-        selectedValue={climaSelecionado}
-        onValueChange={(itemValue, itemIndex) => {
-          FiltroClima(itemValue);
-        }}
-      >
-        <Picker.Item label="All" value="All" />
-        {filtroClima.map((data, index) => {
-          return <Picker.Item key={index} label={data} value={data} />;
-        })}
-      </Picker>
+      <BoxFilter>
+        <Title>População: </Title>
+        <Picker
+          enabled={isActivePicker}
+          selectedValue={populacaoSelecionada}
+          onValueChange={(itemValue, itemIndex) => {
+            FiltroPopulacao(itemValue);
+          }}
+        >
+          <Picker.Item label="All" value="All" />
+          {filtroPopulacao.map((data, index) => {
+            return <Picker.Item key={index} label={data} value={data} />;
+          })}
+        </Picker>
+        <Title>Clima: </Title>
+        <Picker
+          enabled={isActivePicker}
+          selectedValue={climaSelecionado}
+          onValueChange={(itemValue, itemIndex) => {
+            FiltroClima(itemValue);
+          }}
+        >
+          <Picker.Item label="All" value="All" />
+          {filtroClima.map((data, index) => {
+            return <Picker.Item key={index} label={data} value={data} />;
+          })}
+        </Picker>
+      </BoxFilter>
       <ContainerCard>
-      {isLoading ? (
+        {isLoading ? (
           <Loading />
         ) : (
           planetas && (
@@ -139,9 +144,10 @@ export default function Planetas({ navigation }) {
               style={{ width: "100%" }}
               data={planetasFiltrados}
               renderItem={({ item, index }) => (
-                <ListItem
+                <ListItemPlanet
                   nome={item.name}
-                  genero={item.population}
+                  populacao={item.population}
+                  clima={item.climate}
                   onPress={() => {
                     navigation.navigate("detalhe-planeta", {
                       url: item.url,
@@ -151,7 +157,7 @@ export default function Planetas({ navigation }) {
               )}
               keyExtractor={(item, index) => String(index)}
             />
-          ) 
+          )
         )}
       </ContainerCard>
     </Container>

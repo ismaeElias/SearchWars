@@ -8,6 +8,9 @@ import Input from "../../components/Input";
 import ListItem from "../../components/ListItem";
 import Loading from "../../components/Loading";
 
+import BoxFilter from '../../components/BoxFilter';
+import Title from '../../components/Title';
+
 import api from "../../services/api";
 
 export default function Personagens({ navigation }) {
@@ -61,6 +64,8 @@ export default function Personagens({ navigation }) {
           setTextInput(text);
         }}
       />
+      <BoxFilter>
+      <Title>Genero:</Title>
       <Picker
         enabled={isActivePicker}
         selectedValue={selectedLanguage}
@@ -81,7 +86,7 @@ export default function Personagens({ navigation }) {
           return <Picker.Item key={index} label={genero} value={genero} />;
         })}
       </Picker>
-
+      </BoxFilter>
       <ContainerCard>
         {isLoading ? (
           <Loading />

@@ -6,10 +6,13 @@ export const Container = styled.View`
   padding: 5px;
 `;
 
-
-
 export const ContainerCard = styled.View`
   flex: 1;
   align-items: center;
   padding : 15px;
+`;
+
+
+export const Title = styled.Text`
+  font-weight: bold;
 `;
