@@ -13,6 +13,7 @@ import {
   BoxFilmes,
   TitleFilmes,
   ItemFilmes,
+  TextDark
 } from "./style";
 
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -104,6 +105,7 @@ export default function DetalhePlanetas(props) {
               {planeta.residentes.map((residente, index) => {
                 return (
                   <View
+                    key={index}
                     style={{
                       flexDirection: "row",
                       justifyContent: "space-between",
@@ -128,8 +130,8 @@ export default function DetalhePlanetas(props) {
                         })
                       }}
                     >
-                      <Text key={index}>{residente.nome}</Text>
-                      <Icon name="caret-right" size={30} color="#A5A5A5" />
+                      <TextDark key={index}>{residente.nome}</TextDark>
+                      <Icon name="caret-right" size={30} color="#373737" />
                     </ItemResidentes>
                   </View>
                 );

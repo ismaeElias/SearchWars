@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { FlatList } from "react-native";
 import api from "../../services/api";
-
 import { Picker } from "@react-native-picker/picker";
+import { FormataData } from '../../utils/index';
 
 import { Container, ContainerCard } from "./styles";
 
@@ -15,7 +15,7 @@ import Title from "../../components/Title";
 export default function Filmes({ navigation }) {
   const [TextInput, setTextInput] = useState("");
   const [selectedLanguage, setSelectedLanguage] = useState();
-  const [filme, setFilme] = useState([]);
+  const [filme, setFilme] = useState();
   const [filmeFiltered, setFilmeFiltered] = useState([]);
   const [dataLancamento, setDataLancamento] = useState([]);
   const [isActivePicker, setIsActivePicker] = useState(false);
@@ -31,7 +31,7 @@ export default function Filmes({ navigation }) {
       setFilmeFiltered(res.data.results);
 
       for (const date of res.data.results) {
-        dataLancamento.push(date.release_date);
+        dataLancamento.push(FormataData(date.release_date));
       }
 
       SetDataLancamento = new Set(dataLancamento);
@@ -64,7 +64,7 @@ export default function Filmes({ navigation }) {
             setSelectedLanguage(itemValue);
             if (itemValue !== "All") {
               let filmeFiltered = filme.filter((filter) => {
-                return filter.release_date === itemValue;
+                return FormataData(filter.release_date) === itemValue;
               });
               setFilmeFiltered(filmeFiltered);
             } else {
@@ -89,7 +89,7 @@ export default function Filmes({ navigation }) {
               renderItem={({ item, index }) => (
                 <ListItem
                   nome={item.title}
-                  genero={item.release_date}
+                  genero={FormataData(item.release_date)}
                   onPress={() => {
                     navigation.navigate("detalhe-filme", {
                       url: item.url,

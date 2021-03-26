@@ -10,6 +10,7 @@ import {
   BoxInfo,
   ItemFilmes,
   TextFilmes,
+  BoxFilmes,
 } from "./styles";
 
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -51,7 +52,7 @@ export default function DetalhePersonagem(props) {
       getPersonagem(url);
     });
 
-    return unsubscribe
+    return unsubscribe;
   }, [props.navigation]);
 
   return (
@@ -73,28 +74,30 @@ export default function DetalhePersonagem(props) {
                 {personagem.genero}
               </TextInfo>
             </BoxInfo>
-            <SubTitle>Filmes:</SubTitle>
-            {personagem.filmes.map((filmes, index) => {
-              return (
-                <ItemFilmes
-                  key={index}
-                  onPress={() => {
-                    props.navigation.push("detalhe-filme", {
-                      url: filmes.url,
-                    });
-                    setPersonagem({
-                      nome: "",
-                      aniversario: "",
-                      genero: "",
-                      filmes: [],
-                    });
-                  }}
-                >
-                  <TextFilmes>{filmes.title}</TextFilmes>
-                  <Icon name="caret-right" size={30} color="#A5A5A5" />
-                </ItemFilmes>
-              );
-            })}
+            <BoxFilmes>
+            <TextFilmes>Filmes:</TextFilmes>
+              {personagem.filmes.map((filmes, index) => {
+                return (
+                  <ItemFilmes
+                    key={index}
+                    onPress={() => {
+                      props.navigation.push("detalhe-filme", {
+                        url: filmes.url,
+                      });
+                      setPersonagem({
+                        nome: "",
+                        aniversario: "",
+                        genero: "",
+                        filmes: [],
+                      });
+                    }}
+                  >
+                    <TextFilmes>{filmes.title}</TextFilmes>
+                    <Icon name="caret-right" size={30} color="#373737" />
+                  </ItemFilmes>
+                );
+              })}
+            </BoxFilmes>
           </>
         )
       )}

@@ -76,3 +76,10 @@ export const ItemFilmes= styled.TouchableOpacity`
   justify-content: space-between;
   align-items: center;
 `;
+
+
+export const TextDark = styled.Text`
+  color: #121212;
+  font-weight: bold;
+  font-size: 16px;
+`;

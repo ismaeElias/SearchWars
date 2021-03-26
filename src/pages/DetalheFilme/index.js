@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ScrollView, View, Text } from "react-native";
 import axios from "axios";
+import { FormataData } from '../../utils/index';
 
 import Icon from "react-native-vector-icons/FontAwesome";
 import Loading from "../../components/Loading";
@@ -15,7 +16,8 @@ import {
   TitlePersonagem,
   BoxPlanetas,
   ItemPlanetas,
-  TitlePlanetas
+  TitlePlanetas,
+  TextDark
 } from "./styles";
 
 export default function DetalheFilme(props) {
@@ -78,7 +80,7 @@ export default function DetalheFilme(props) {
             <TextoAbertura>{filme.texto_abertura}</TextoAbertura>
             <BoxInfo>
               <TextInfo>Episodio: {filme.episodio}</TextInfo>
-              <TextInfo>Data: {filme.lancamento}</TextInfo>
+              <TextInfo>Data: {FormataData(filme.lancamento)}</TextInfo>
             </BoxInfo>
             <BoxPersonagem>
               <TitlePersonagem>Personagens:</TitlePersonagem>
@@ -107,8 +109,8 @@ export default function DetalheFilme(props) {
                         })
                       }}
                     >
-                      <Text key={index}>{personagem.nome}</Text>
-                      <Icon name="caret-right" size={30} color="#A5A5A5" />
+                      <TextDark key={index}>{personagem.nome}</TextDark>
+                      <Icon name="caret-right" size={30} color="#373737" />
                     </ItemPersonagem>
                   </View>
                 );
@@ -141,8 +143,8 @@ export default function DetalheFilme(props) {
                         })
                       }}
                     >
-                      <Text key={index}>{planetas.nome}</Text>
-                      <Icon name="caret-right" size={30} color="#A5A5A5" />
+                      <TextDark key={index}>{planetas.nome}</TextDark>
+                      <Icon name="caret-right" size={30} color="#373737" />
                     </ItemPlanetas>
                   </View>
                 );

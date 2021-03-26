@@ -7,7 +7,6 @@ import { Container, ContainerCard } from "./styles";
 import Input from "../../components/Input";
 import ListItem from "../../components/ListItem";
 import Loading from "../../components/Loading";
-
 import BoxFilter from '../../components/BoxFilter';
 import Title from '../../components/Title';
 
