@@ -84,7 +84,7 @@ export default function DetalheFilme(props) {
               <TitlePersonagem>Personagens:</TitlePersonagem>
               {filme.personagens.map((personagem, index) => {
                 return (
-                  <View
+                  <View key={index}
                     style={{
                       flexDirection: "row",
                       justifyContent: "space-between",
@@ -118,7 +118,7 @@ export default function DetalheFilme(props) {
               <TitlePlanetas>Planetas:</TitlePlanetas>
               {filme.planetas.map((planetas, index) => {
                 return (
-                  <View
+                  <View key={index}
                     style={{
                       flexDirection: "row",
                       justifyContent: "space-between",

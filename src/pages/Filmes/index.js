@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, FlatList } from "react-native";
+import {  FlatList } from "react-native";
 import api from "../../services/api";
 
 import { Picker } from "@react-native-picker/picker";
