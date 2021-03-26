@@ -3,15 +3,15 @@ import { View, Text, FlatList } from "react-native";
 import api from "../../services/api";
 import { Picker } from "@react-native-picker/picker";
 
-import { ArrayFilter } from "../../utils/index";
+import { ArrayFilter, showToast } from "../../utils/index";
 
-import { Container, ContainerCard  } from "./styles";
+import { Container, ContainerCard } from "./styles";
 
 import Input from "../../components/Input";
 import Loading from "../../components/Loading";
 import ListItemPlanet from "../../components/ListItemPlanet";
-import BoxFilter from '../../components/BoxFilter';
-import Title from '../../components/Title';
+import BoxFilter from "../../components/BoxFilter";
+import Title from "../../components/Title";
 
 export default function Planetas({ navigation }) {
   const [populacaoSelecionada, setPopulacaoSelecionada] = useState("All");
@@ -32,28 +32,37 @@ export default function Planetas({ navigation }) {
     let clima = [];
     let climaFiltrada = [];
 
-    await api.get(`planets?search=${TextInput}`).then((res) => {
-      const { results } = res.data;
-      setPlanetas(results);
-      setPlanetasFiltrados(results);
-
-      for (const population of results) {
-        populacao.push(population.population);
-      }
-      populacaoFiltrada = [...ArrayFilter(populacao)];
-      populacao = populacaoFiltrada;
-
-      for (const climate of results) {
-        clima.push(climate.climate);
-      }
-      climaFiltrada = [...ArrayFilter(clima)];
-      clima = climaFiltrada;
-
-      setFiltroClima(clima);
-      setFiltroPopulacao(populacao);
-      setIsActivePicker(true);
+    if (!TextInput) {
       setIsLoading(false);
-    });
+      return showToast("Favor digite um nome de planeta :/");
+    }
+    try {
+      await api.get(`planets?search=${TextInput}`).then((res) => {
+        const { results } = res.data;
+        setPlanetas(results);
+        setPlanetasFiltrados(results);
+
+        for (const population of results) {
+          populacao.push(population.population);
+        }
+        populacaoFiltrada = [...ArrayFilter(populacao)];
+        populacao = populacaoFiltrada;
+
+        for (const climate of results) {
+          clima.push(climate.climate);
+        }
+        climaFiltrada = [...ArrayFilter(clima)];
+        clima = climaFiltrada;
+
+        setFiltroClima(clima);
+        setFiltroPopulacao(populacao);
+        setIsActivePicker(true);
+        setIsLoading(false);
+      });
+    } catch (err) {
+      setIsLoading(false);
+      showToast('Houve um erro ao retonar os dados do planeta :/');
+    }
   }
 
   function FiltroClima(itemValue) {

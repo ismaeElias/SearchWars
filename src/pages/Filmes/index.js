@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FlatList } from "react-native";
 import api from "../../services/api";
 import { Picker } from "@react-native-picker/picker";
-import { FormataData } from '../../utils/index';
+import { FormataData,showToast } from "../../utils/index";
 
 import { Container, ContainerCard } from "./styles";
 
@@ -11,6 +11,8 @@ import Loading from "../../components/Loading";
 import ListItem from "../../components/ListItem";
 import BoxFilter from "../../components/BoxFilter";
 import Title from "../../components/Title";
+
+
 
 export default function Filmes({ navigation }) {
   const [TextInput, setTextInput] = useState("");
@@ -25,22 +27,32 @@ export default function Filmes({ navigation }) {
     setIsLoading(true);
     let dataLancamento = [];
     let SetDataLancamento = [];
+    try {
 
-    await api.get(`/films?search=${TextInput}`).then((res) => {
-      setFilme(res.data.results);
-      setFilmeFiltered(res.data.results);
-
-      for (const date of res.data.results) {
-        dataLancamento.push(FormataData(date.release_date));
+      if (!TextInput) {
+        setIsLoading(false);
+        return showToast('Insira um nome de filme ae :D Que a força esteja com você');
       }
 
-      SetDataLancamento = new Set(dataLancamento);
-      if (SetDataLancamento) {
-        dataLancamento = [...SetDataLancamento];
-        setIsActivePicker(true);
-        setDataLancamento(dataLancamento);
-      }
-    });
+      await api.get(`/films?search=${TextInput}`).then((res) => {
+        setFilme(res.data.results);
+        setFilmeFiltered(res.data.results);
+
+        for (const date of res.data.results) {
+          dataLancamento.push(FormataData(date.release_date));
+        }
+
+        SetDataLancamento = new Set(dataLancamento);
+        if (SetDataLancamento) {
+          dataLancamento = [...SetDataLancamento];
+          setIsActivePicker(true);
+          setDataLancamento(dataLancamento);
+        }
+      });
+    } catch (err) {
+      showToast('Opss... houve um erro ao buscar os dados :/');
+    }
+
     setIsLoading(false);
   }
 

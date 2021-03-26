@@ -3,6 +3,7 @@ import { Alert, FlatList } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 
 import { Container, ContainerCard } from "./styles";
+import { showToast } from '../../utils';
 
 import Input from "../../components/Input";
 import ListItem from "../../components/ListItem";
@@ -27,29 +28,34 @@ export default function Personagens({ navigation }) {
     let filterGender = [];
 
     if (!textInput) {
-      Alert.alert("Digite um personagem para buscar :/");
-      return;
-    }
-
-    await api.get(`people?search=${textInput}`).then((res) => {
-      const { results } = res.data;
-      let SetGender = [];
-
-      setPersonagem(results);
-      setPersonFiltered(results);
       setIsLoading(false);
-
-      for (const personagem of results) {
-        gender.push(personagem.gender);
-      }
-
-      SetGender = new Set(gender);
-      if (SetGender) {
-        filterGender = [...SetGender];
-        setIsActivePicker(true);
-        setGeneros(filterGender);
-      }
-    });
+      return showToast('Insira um nome para buscar e venha para o lado da força :D');
+    }
+    try {
+      await api.get(`people?search=${textInput}`).then((res) => {
+        const { results } = res.data;
+        let SetGender = [];
+  
+        setPersonagem(results);
+        setPersonFiltered(results);
+        setIsLoading(false);
+  
+        for (const personagem of results) {
+          gender.push(personagem.gender);
+        }
+  
+        SetGender = new Set(gender);
+        if (SetGender) {
+          filterGender = [...SetGender];
+          setIsActivePicker(true);
+          setGeneros(filterGender);
+        }
+      });
+    } catch (err) {
+      showToast('Houve um erro ao buscar o personagem :/');
+      setIsLoading(false);
+    }
+    
   }
 
   return (
